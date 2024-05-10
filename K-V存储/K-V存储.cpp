@@ -6,8 +6,9 @@
 #include "Parallel_DataBase.h"
 #include <thread>
 
-const int numThreads = 100;
-void transaction(Parallel_DataBase<int, std::string, Parallel_SkipList<int, std::string>>& db) {
+const int numThreads = 20;
+typedef Parallel_DataBase<int, std::string, -99999> DB;
+void transaction(DB& db) {
     // 生成指定长度的随机字符串
     std::function<std::string(void)> generateRandomString = []()->std::string {
         int length = rand() % 10;
@@ -21,8 +22,8 @@ void transaction(Parallel_DataBase<int, std::string, Parallel_SkipList<int, std:
     std::function<int(void)> generateRandomInt = []()->int {
         return rand() * 1000 + rand();
     };
-    //int x = rand() % 4;
-    int x = 1;
+    int x = rand() % 4;
+    //int x = 1;
     switch (x) {
         case 0:db.Insert(generateRandomInt(), generateRandomString()); break;
         case 1:db.Delete(generateRandomInt()); break;
@@ -31,10 +32,10 @@ void transaction(Parallel_DataBase<int, std::string, Parallel_SkipList<int, std:
         case 4:db.RangeIn(generateRandomInt(), generateRandomInt()); break;
     }
 }
-void test(Parallel_DataBase<int, std::string, Parallel_SkipList<int, std::string>>& db)
+void test(DB& db)
 {
     auto start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < 1'00; i++) {
+    for (int i = 0; i < 10000; i++) {
         transaction(db);
     }
     auto end = std::chrono::high_resolution_clock::now();
@@ -42,9 +43,8 @@ void test(Parallel_DataBase<int, std::string, Parallel_SkipList<int, std::string
     std::cout << "程序运行时间为: " << elapsed.count() << " 秒" << std::endl;
 }
 void Parallel_Test() {
-    Parallel_DataBase<int, std::string, Parallel_SkipList<int, std::string>> db("storage");
+    DB db("storage");
     db.Start();
-    
     std::vector<std::thread> threads;
     for (int i = 0; i < numThreads; ++i) {
         threads.push_back(std::thread(test,ref(db)));
@@ -57,6 +57,6 @@ void Parallel_Test() {
     }
     db.Close();
 }
-//int main() {
-//    Parallel_Test();
-//}
+int main() {
+    Parallel_Test();
+}

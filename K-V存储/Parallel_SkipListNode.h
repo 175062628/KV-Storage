@@ -1,17 +1,17 @@
 #pragma once
-#include"ReadWriteDeleteLock.h"
-template<typename K, typename V> class Parallel_SkipList;
+#include"ReadWriteLock.h"
+template<typename K, typename V, K MinK> class Parallel_SkipList;
 template<typename K, typename V>
 class Parallel_SkipListNode {
-	template<typename K, typename V> friend class Parallel_SkipList;
-	friend class ReadWriteDeleteLock;
+	template<typename K, typename V, K MinK> friend class Parallel_SkipList;
+	friend class ReadWriteLock;
 public:
-	typedef ReadWriteDeleteLock		Latch;
+	typedef ReadWriteLock		Latch;
 public:
-	Parallel_SkipListNode() {
+	Parallel_SkipListNode(K key) :_key(key), _exist(true) {
 
 	}
-	Parallel_SkipListNode(K key, V value) :_key(key), _value(value) {
+	Parallel_SkipListNode(K key, V value) :_key(key), _value(value), _exist(true){
 
 	}
 	Parallel_SkipListNode(const Parallel_SkipListNode* node) {
@@ -28,6 +28,15 @@ public:
 	V GetValue() {
 		return _value;
 	}
+	bool Exist() {
+		return _exist;
+	}
+	void Delete() {
+		_exist = false;
+	}
+	void Insert() {
+		_exist = true;
+	}
 	~Parallel_SkipListNode() {
 
 	}
@@ -38,5 +47,5 @@ private:
 	Parallel_SkipListNode<K, V>* _down = nullptr;
 	Parallel_SkipListNode<K, V>* _prev = nullptr;
 	Latch _latch;
-	bool _exist = true;
+	bool _exist;
 };

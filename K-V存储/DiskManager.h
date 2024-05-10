@@ -19,8 +19,8 @@ public:
 		if (!file.is_open()) {
 			return false;
 		}
-		for (auto& [key, value] : data) {
-			file << key << "\n" << value << "\n";
+		for (int i = 1; i < data.size(); i++) {
+			file << data[i].first << "\n" << data[i].second << "\n";
 		}
 		file.close();
 		return true;

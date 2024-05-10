@@ -18,7 +18,7 @@
     <ClCompile Include="K-V存储.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ReadWriteDeleteLock.cpp">
+    <ClCompile Include="ReadWriteLock.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SkipListNode.h">
@@ -41,7 +41,7 @@
     <ClInclude Include="Parallel_SkipList.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ReadWriteDeleteLock.h">
+    <ClInclude Include="ReadWriteLock.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Parallel_DataBase.h">

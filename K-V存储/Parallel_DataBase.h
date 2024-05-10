@@ -1,8 +1,7 @@
 #pragma once
-#pragma once
 #include"Parallel_SkipList.h"
 #include"DiskManager.h"
-template<typename K, typename V, typename DataStruct = Parallel_SkipList<K, V>, typename DiskManager = DiskManager<K, V, DataStruct>>
+template<typename K, typename V, K MinK, typename DataStruct = Parallel_SkipList<K, V, MinK>, typename DiskManager = DiskManager<K, V, DataStruct>>
 class Parallel_DataBase {
 	typedef DataStruct		DB;
 	typedef const K&		const_K_ref;
@@ -41,12 +40,9 @@ public:
 
 	std::vector<K> res;
 	bool Delete(const_K_ref key) {
-		//std::cout << key << std::endl;
-		//_db.ShowStruct();
 		if (_db[Hash(key)].Delete(key)) {
 			res.push_back(key);
 		}
-		//return _db[Hash(key)].Delete(key);
 		return 1;
 	}
 	V Search(const_K_ref key) {

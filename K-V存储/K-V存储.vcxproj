@@ -130,14 +130,14 @@
   <ItemGroup>
     <ClCompile Include="K-V存储.cpp" />
     <ClCompile Include="Parallel_SkipListNode.h" />
-    <ClCompile Include="ReadWriteDeleteLock.cpp" />
+    <ClCompile Include="ReadWriteLock.cpp" />
     <ClCompile Include="SkipListNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataBase.h" />
     <ClInclude Include="Parallel_DataBase.h" />
     <ClInclude Include="Parallel_SkipList.h" />
-    <ClInclude Include="ReadWriteDeleteLock.h" />
+    <ClInclude Include="ReadWriteLock.h" />
     <ClInclude Include="DiskManager.h" />
     <ClInclude Include="SkipList.h" />
   </ItemGroup>
